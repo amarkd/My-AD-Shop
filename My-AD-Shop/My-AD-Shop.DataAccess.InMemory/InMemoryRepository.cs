@@ -1,4 +1,5 @@
-﻿using My_AD_Shop.Core.Models;
+﻿using My_AD_Shop.Core.Contracts;
+using My_AD_Shop.Core.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace My_AD_Shop.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
         ObjectCache cache = MemoryCache.Default;
         List<T> items;
         string className;
 
         public InMemoryRepository()
-        {
+        {   
             className = typeof(T).Name;
             items = cache[className] as List<T>;
             if (items == null)
