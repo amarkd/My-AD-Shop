@@ -11,9 +11,14 @@ namespace My_AD_Shop.WebUI.Controllers
     {
         IBasketService basketService;
 
-        public BasketController(IBasketService BasketService)
+        public BasketController(IBasketService BasketService, object orderService1, object orderService)
         {
             this.basketService = BasketService;
+        }
+
+        public BasketController(IBasketService basketService)
+        {
+            this.basketService = basketService;
         }
 
         // GET: Basket

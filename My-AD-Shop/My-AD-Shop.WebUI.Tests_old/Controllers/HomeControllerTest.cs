@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using My_AD_Shop.Core.Contracts;
 using My_AD_Shop.Core.Models;
 using My_AD_Shop.Core.ViewModels;
+using My_AD_Shop.WebUI;
 using My_AD_Shop.WebUI.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using My_AD_Shop.WebUI.Tests.Mocks;
 
 namespace My_AD_Shop.WebUI.Tests.Controllers
 {
@@ -18,12 +17,11 @@ namespace My_AD_Shop.WebUI.Tests.Controllers
         [TestMethod]
         public void IndexPageDoesReturnProducts()
         {
-            IRepository<Product> productContext = new Mocks.MockContext<Product>();
-            IRepository<ProductCategory> productCatgeoryContext = new Mocks.MockContext<ProductCategory>();
+            IRepository<Product> productContext = new MockContext<Product>();
+            IRepository<ProductCategory> productCatgeoryContext = new MockContext<ProductCategory>();
+            HomeController controller = new HomeController(productContext, productCatgeoryContext);
 
             productContext.Insert(new Product());
-
-            HomeController controller = new HomeController(productContext, productCatgeoryContext);
 
             var result = controller.Index() as ViewResult;
             var viewModel = (ProductListViewModel)result.ViewData.Model;
